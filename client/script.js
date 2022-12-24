@@ -24,7 +24,7 @@ function typeText(element, text) {
     let index = 0;
     let typeInterval = setInterval(() => {
         if (index < text.length) {
-            element.innerHtml += text.charAt(index);
+            element.innerHTML += text.charAt(index);
             index++;
         }
         else {
@@ -93,8 +93,23 @@ const handleSubmit = async (e) => {
     clearInterval(loadInterval);
     messageDiv.innerHTML = '';
 
+    if (response.ok) {
+        const data = await response.json();
+        const parseData = data.bot.trim;
 
-    const parseData = response.bot.trim;
+        //bots starts typing the response
+
+        typeText(messageDiv, parseData);
+    }
+    else {
+        const err = await response.text();
+
+        messageDiv.innerHTML = "Something went wrong!";
+
+        alert(err);
+    }
+
+
 
 }
 
