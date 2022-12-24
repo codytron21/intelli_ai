@@ -46,17 +46,17 @@ function generateUniqueId() {
 function chatPanel(isAi, value, uniqueId) {
     return (
         `
-    <div class="wrapper" ${isAi && 'ai'}>
-      <div class="chat">
-         <div class="profile">
-          <img 
-           src="${isAi ? bot : user}"
-           alt="${isAi ? "bot" : "user"}"
-          />      
-         </div>
-         <div class="message" id=${uniqueId}>${value}</div>
-      </div> 
-     </div>
+        <div class="wrapper" ${isAi && 'ai'}>
+            <div class="chat">
+                <div class="profile">
+                    <img 
+                      src=${isAi ? bot : user} 
+                      alt="${isAi ? 'bot' : 'user'}" 
+                    />
+                </div>
+                <div class="message" id=${uniqueId}>${value}</div>
+            </div>
+        </div>
     `
     )
 }
@@ -81,7 +81,7 @@ const handleSubmit = async (e) => {
 
     // fetch data from server --> bot's response
 
-    const response = await fetch('http://localhost:8000', {
+    const response = await fetch('https://intelli-ai-server.onrender.com', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -95,10 +95,9 @@ const handleSubmit = async (e) => {
 
     if (response.ok) {
         const data = await response.json();
-        const parseData = data.bot.trim;
-
+        const parseData = data.bot.trim();
+        console.log(parseData);
         //bots starts typing the response
-
         typeText(messageDiv, parseData);
     }
     else {
